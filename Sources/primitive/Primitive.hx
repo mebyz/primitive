@@ -14,6 +14,9 @@ class Primitive {
 		    case 'plane': {
 		    	s = new Plane(params.size);
 		    }
+		    case 'cube': {
+		    	s = new Cube(params.x,params.y,params.z);
+		    }
 		    default: s = new Shape();
 		}
 			
