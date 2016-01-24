@@ -7,10 +7,25 @@ import kha.graphics4.VertexStructure;
 
 class Plane extends Shape {
 
+
+	public function getHMVal(heightMap : Array<Array<Float>>, i,j) {
+		
+		if (heightMap!=[]) {
+			trace((heightMap[i][j]+50)/50);
+			return (heightMap[i][j]+50)/50;
+		}
+
+		return 0.0;
+	}
+
 	//!TODO : clean this code. work in progress.
-	public function new(size : Int = 10) {
+	public function new(size : Int = 10, heightMap : Array<Array<Float>>) {
 
 		super();
+
+		if (heightMap!=[]) {
+			//trace(heightMap);
+		}
 
 		var v:Array<Float> = new Array();
 		var ind:Array<Int> = new Array();
@@ -19,10 +34,10 @@ class Plane extends Shape {
 
 			for (j in 0...size) {
 
-				v.push(-0.1*i);v.push(-0.1*j);v.push(0.0);
-				v.push(0.1*i);v.push(-0.1*j);v.push(0.0);
-				v.push(-0.1*i);v.push(0.1*j);v.push(0.0);
-				v.push(0.1*i);v.push(0.1*j);v.push(0.0);
+				v.push(-0.1*i);v.push(-0.1*j);v.push(getHMVal(heightMap,i,j));
+				v.push(0.1*i);v.push(-0.1*j);v.push(getHMVal(heightMap,i,j));
+				v.push(-0.1*i);v.push(0.1*j);v.push(getHMVal(heightMap,i,j));
+				v.push(0.1*i);v.push(0.1*j);v.push(getHMVal(heightMap,i,j));
 
 				ind.push((i*size+j)*4);
 				ind.push((i*size+j)*4+1);
