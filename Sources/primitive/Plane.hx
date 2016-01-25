@@ -8,59 +8,82 @@ import kha.graphics4.VertexStructure;
 class Plane extends Shape {
 
 
-	public function getHMVal(heightMap : Array<Array<Float>>, i,j) {
-		
-		if (heightMap!=[]) {
-			trace((heightMap[i][j]+50)/50);
-			return (heightMap[i][j]+50)/50;
-		}
-
-		return 0.0;
-	}
-
-	//!TODO : clean this code. work in progress.
-	public function new(size : Int = 10, heightMap : Array<Array<Float>>) {
+	public static inline var AXIS_X:Int = 0;
+	public static inline var AXIS_Y:Int = 1;
+	public static inline var AXIS_Z:Int = 2;
+	
+	public function new(w:Float, h:Float, segmentsX:Int = 2, segmentsY:Int = 2, uvsX:Int = 1, uvsY:Int = 1,
+						heightData:Array<Int> = null, axis:Int = AXIS_Z) {
 
 		super();
 
-		if (heightMap!=[]) {
-			//trace(heightMap);
+		var vertices = new Array<Float>();
+		var stepX = w / (segmentsX - 1);
+		var stepY = h / (segmentsY - 1);
+
+		for (j in 0...segmentsY) {
+			for (i in 0...segmentsX) {
+				vertices.push(i * stepX - w / 2);
+
+				if (heightData == null) 
+					vertices.push(0);
+				else 
+					vertices.push((heightData[j * segmentsX + i]+40) / 5 );
+				
+				vertices.push(j * stepY - h / 2);
+			
+			}
+		}
+    
+		var n:Int = 0;
+		var colSteps:Int = segmentsX * 2;
+		var rowSteps:Int = segmentsY - 1;
+		var indices = new Array<Int>();
+
+		for (r in 0...rowSteps) {
+		    for (c in 0...colSteps) {
+		        var t:Int = c + r * colSteps;
+
+		        if (c == colSteps - 1) {
+		            indices.push(n);
+		        }
+		        else {
+		            indices.push(n);
+
+		            if (t % 2 == 0) {
+		                n += segmentsX;
+		            }
+		            else {
+		                (r % 2 == 0) ? n -= (segmentsX - 1) : n -= (segmentsX + 1);
+		            }
+		        }
+
+		        if (t > 0 && t % (segmentsX * 2) == 0)  indices.pop();
+		    }
 		}
 
-		var v:Array<Float> = new Array();
 		var ind:Array<Int> = new Array();
 
-		for (i in 0...size) {
+		for (i in 0...indices.length) {
+			ind.push(indices[i]);
 
-			for (j in 0...size) {
-
-				v.push(-0.1*i);v.push(-0.1*j);v.push(getHMVal(heightMap,i,j));
-				v.push(0.1*i);v.push(-0.1*j);v.push(getHMVal(heightMap,i,j));
-				v.push(-0.1*i);v.push(0.1*j);v.push(getHMVal(heightMap,i,j));
-				v.push(0.1*i);v.push(0.1*j);v.push(getHMVal(heightMap,i,j));
-
-				ind.push((i*size+j)*4);
-				ind.push((i*size+j)*4+1);
-				ind.push((i*size+j)*4+2);
-
-				ind.push((i*size+j)*4+1);
-				ind.push((i*size+j)*4+2);
-				ind.push((i*size+j)*4+3);
-
+			if (i > 1) {
+				ind.push(indices[i - 1]);
+				ind.push(indices[i]);
 			}
 		}
 
 		var structure : VertexStructure = getVertexStructure();
 
 		vertexBuffer = new VertexBuffer(
-			Std.int(v.length / 3), // 3 floats per vertex
+			Std.int(vertices.length / 3), // 3 floats per vertex
 			structure, 
 			Usage.StaticUsage 
 		);
 		
 		var vbData = vertexBuffer.lock();
 		for (i in 0...vbData.length) {
-			vbData.set(i, v[i]);
+			vbData.set(i, vertices[i]);
 		}
 		vertexBuffer.unlock();
 

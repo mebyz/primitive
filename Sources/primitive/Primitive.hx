@@ -12,10 +12,14 @@ class Primitive {
 		
 		switch shapeName {
 		    case 'plane': {
-		    	s = new Plane(params.size,[]);
+		    	s = new Plane(16,16,16,16);
 		    }
 		    case 'heightmap': {
-		    	s = new Plane(params.size,params.heightmap);
+		    	var heights = [];
+		    	for (i in 0...params.w){
+			    	heights = heights.concat(params.heights[i]);
+		    	}
+		    	s = new Plane(params.w,params.h,params.x,params.y,1,1,heights);
 		    }
 		    case 'cube': {
 		    	s = new Cube(params.x,params.y,params.z);
