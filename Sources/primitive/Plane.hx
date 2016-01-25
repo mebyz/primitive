@@ -11,9 +11,9 @@ class Plane extends Shape {
 	public static inline var AXIS_X:Int = 0;
 	public static inline var AXIS_Y:Int = 1;
 	public static inline var AXIS_Z:Int = 2;
-	
+
 	public function new(w:Float, h:Float, segmentsX:Int = 2, segmentsY:Int = 2, uvsX:Int = 1, uvsY:Int = 1,
-						heightData:Array<Int> = null, axis:Int = AXIS_Z) {
+						heightData:Array<Int> = null,idx:Int = 0,idy:Int = 0) {
 
 		super();
 
@@ -23,14 +23,14 @@ class Plane extends Shape {
 
 		for (j in 0...segmentsY) {
 			for (i in 0...segmentsX) {
-				vertices.push(i * stepX - w / 2);
+				vertices.push(i * stepX - w / 2+idx*17);
 
 				if (heightData == null) 
 					vertices.push(0);
 				else 
-					vertices.push((heightData[j * segmentsX + i]+40) / 5 );
+					vertices.push((heightData[j * segmentsX + i]+50) / 1 );
 				
-				vertices.push(j * stepY - h / 2);
+				vertices.push(j * stepY - h / 2+idy*17);
 			
 			}
 		}
