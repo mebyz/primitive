@@ -20,18 +20,21 @@ class Plane extends Shape {
 		var vertices = new Array<Float>();
 		var stepX = w / (segmentsX - 1);
 		var stepY = h / (segmentsY - 1);
-
+		uvsBuffer = new Array();
 		for (j in 0...segmentsY) {
 			for (i in 0...segmentsX) {
-				vertices.push(i * stepX - w / 2+idx*17);
+				vertices.push(i * stepX - w / 2+idx*w);
 
 				if (heightData == null) 
 					vertices.push(0);
 				else 
 					vertices.push((heightData[j * segmentsX + i]+50) / 1 );
 				
-				vertices.push(j * stepY - h / 2+idy*17);
+				vertices.push(j * stepY - h / 2+idy*h);
 			
+				uvsBuffer.push((i)/100);
+				uvsBuffer.push((j)/100);
+
 			}
 		}
     
@@ -82,8 +85,16 @@ class Plane extends Shape {
 		);
 		
 		var vbData = vertexBuffer.lock();
-		for (i in 0...vbData.length) {
-			vbData.set(i, vertices[i]);
+//		for (i in 0...vbData.length) {
+//			vbData.set(i, vertices[i]);
+//		}
+		var structureLength=5;
+		for (i in 0...Std.int(vbData.length / structureLength)) {
+		  vbData.set(i * structureLength, vertices[i * 3]);
+		  vbData.set(i * structureLength + 1, vertices[i * 3 + 1]);
+		  vbData.set(i * structureLength + 2, vertices[i * 3 + 2]);
+		  vbData.set(i * structureLength + 3, uvsBuffer[i * 2]);
+		  vbData.set(i * structureLength + 4, uvsBuffer[i * 2 + 1]);
 		}
 		vertexBuffer.unlock();
 
