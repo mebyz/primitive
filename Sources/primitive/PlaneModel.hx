@@ -51,12 +51,15 @@ class PlaneModel {
 		g.setVertexBuffer(vtb);
 		g.setIndexBuffer(idb);
 		// Get a handle for texture sample
+		var sand = pipeline.getTextureUnit("sand");
+		var image = Assets.images.sand;
+		g.setTexture(sand, image);
 		var stone = pipeline.getTextureUnit("stone");
-		var image = Assets.images.stone;
-		g.setTexture(stone, image);
+		var image2 = Assets.images.stone;
+		g.setTexture(stone, image2);
 		var grass = pipeline.getTextureUnit("grass");
-		var image2 = Assets.images.grass;
-		g.setTexture(grass, image2);
+		var image3 = Assets.images.grass;
+		g.setTexture(grass, image3);
 		g.setMatrix(mvpID, mvp);
 		g.drawIndexedVertices();
 	}
