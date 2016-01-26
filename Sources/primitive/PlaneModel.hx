@@ -23,13 +23,13 @@ class PlaneModel {
 	public var shader1 : Dynamic;
 	public var shader2 : Dynamic;
 
-	public function new(heightmap :Array<Int>,idx,idy) {
+	public function new(heightmap :Array<Int>,idx,idy, params : Dynamic) {
 
 		var shader1 = {f:Shaders.simple_frag,v:Shaders.simple_vert};
 		var shader2 = {f:Shaders.green_frag,v:Shaders.green_vert};
 		var shaders = [shader1,shader2];
 
-		var pr = new Primitive('heightmap', { w:16, h:16, x:16, y:16, heights:heightmap,idx:idx,idy:idy});
+		var pr = new Primitive('heightmap', {w:params.w,h: params.h,x: params.x,y: params.y,heights:heightmap,idx:idx,idy:idy});
 		st  = pr.getVertexStructure();
 		idb = pr.getIndexBuffer();
 		vtb = pr.getVertexBuffer();
