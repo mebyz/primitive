@@ -46,6 +46,10 @@ class PlaneModel {
 		g.setPipeline(pipeline);
 		g.setVertexBuffer(vtb);
 		g.setIndexBuffer(idb);
+		// Get a handle for texture sample
+		var texture = pipeline.getTextureUnit("texture");
+		var image = Assets.images.water;
+		g.setTexture(texture, image);
 		g.setMatrix(mvpID, mvp);
 		g.drawIndexedVertices();
 	}
