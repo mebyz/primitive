@@ -26,7 +26,7 @@ class Plane extends Shape {
 				vertices.push(i * stepX - w / 2+idx*w);
 
 				if (heightData == null) 
-					vertices.push(0);
+					vertices.push(16.0);
 				else 
 					vertices.push((heightData[j * segmentsX + i]+50) / 1 );
 				

@@ -12,7 +12,7 @@ class Primitive {
 		
 		switch shapeName {
 		    case 'plane': {
-		    	s = new Plane(16,16,16,16);
+		    	s = new Plane(params.w,params.h,params.x,params.y);
 		    }
 		    case 'heightmap': {
 		    	var heights = [];
