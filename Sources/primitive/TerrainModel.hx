@@ -11,6 +11,8 @@ import kha.math.FastMatrix4;
 import kha.graphics4.CompareMode;
 import kha.Shaders;
 import kha.Assets;
+import kha.graphics4.CullMode;
+
 
 class TerrainModel {
 
@@ -56,6 +58,9 @@ class TerrainModel {
 		var grass = pipeline.getTextureUnit("grass");
 		var image3 = Assets.images.grass;
 		g.setTexture(grass, image3);
+		var snow = pipeline.getTextureUnit("snow");
+		var image4 = Assets.images.snow;
+		g.setTexture(snow, image4);
 		g.setMatrix(mvpID, mvp);
 		g.drawIndexedVertices();
 	}
