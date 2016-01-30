@@ -42,15 +42,17 @@ class PlaneModel {
 		mvpID = pipeline.getConstantLocation("MVP");
 	}
 	public function drawPlane(frame:Framebuffer, mvp:FastMatrix4) {	
-		var g = frame.g4;
-		g.setPipeline(pipeline);
-		g.setVertexBuffer(vtb);
-		g.setIndexBuffer(idb);
-		// Get a handle for texture sample
-		var texture = pipeline.getTextureUnit("texture");
-		var image = Assets.images.water;
-		g.setTexture(texture, image);
-		g.setMatrix(mvpID, mvp);
-		g.drawIndexedVertices();
+		if (mvp != null) {		
+			var g = frame.g4;
+			g.setPipeline(pipeline);
+			g.setVertexBuffer(vtb);
+			g.setIndexBuffer(idb);
+			// Get a handle for texture sample
+			var texture = pipeline.getTextureUnit("texture");
+			var image = Assets.images.water;
+			g.setTexture(texture, image);
+			g.setMatrix(mvpID, mvp);
+			g.drawIndexedVertices();
+		}
 	}
 }
