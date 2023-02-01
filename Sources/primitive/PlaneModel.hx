@@ -1,7 +1,7 @@
 package primitive;
 
+import haxe.Timer;
 import kha.graphics4.IndexBuffer;
-import kha.graphics4.Usage;
 import kha.graphics4.VertexBuffer;
 import kha.graphics4.VertexStructure;
 import kha.graphics4.PipelineState;
@@ -20,10 +20,11 @@ class PlaneModel {
 	public var pipeline:PipelineState;
 	public var mvpID:ConstantLocation;
 	public var shader : Dynamic;
+	public var timeLocation:ConstantLocation;
 
 	public function new(idx,idy, params : Dynamic) {
 
-		var shader = {f:Shaders.green_frag,v:Shaders.green_vert};
+		var shader = {f:Shaders.ocean_frag,v:Shaders.ocean_vert};
 
 		var pr = new Primitive('plane', {w:params.w,h: params.h,x: params.x,y:params.y});
 		st  = pr.getVertexStructure();
@@ -40,6 +41,7 @@ class PlaneModel {
 		pipeline.compile();
 
 		mvpID = pipeline.getConstantLocation("MVP");
+		timeLocation = pipeline.getConstantLocation("time");
 	}
 	public function drawPlane(frame:Framebuffer, mvp:FastMatrix4) {	
 		if (mvp != null) {		
@@ -48,11 +50,16 @@ class PlaneModel {
 			g.setVertexBuffer(vtb);
 			g.setIndexBuffer(idb);
 			// Get a handle for texture sample
-			var texture = pipeline.getTextureUnit("texture");
+			var texture = pipeline.getTextureUnit("s_texture");
 			var image = Assets.images.water;
+			g.setTexture(texture, image);
+			
+			var texture = pipeline.getTextureUnit("s_normals");
+			var image = Assets.images.waternormals;
 			g.setTexture(texture, image);
 			g.setMatrix(mvpID, mvp);
 			g.drawIndexedVertices();
+			g.setFloat(timeLocation, Timer.stamp());
 		}
 	}
 }

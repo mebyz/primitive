@@ -1,6 +1,5 @@
 package primitive;
 
-import primitive.Primitive;
 import primitive.Shape;
 import primitive.Plane;
 

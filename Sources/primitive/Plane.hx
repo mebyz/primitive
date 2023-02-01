@@ -7,11 +7,6 @@ import kha.graphics4.VertexStructure;
 
 class Plane extends Shape {
 
-
-	public static inline var AXIS_X:Int = 0;
-	public static inline var AXIS_Y:Int = 1;
-	public static inline var AXIS_Z:Int = 2;
-
 	public function new(w:Float, h:Float, segmentsX:Int = 2, segmentsY:Int = 2, uvsX:Int = 1, uvsY:Int = 1,
 						heightData:Array<Int> = null,idx:Int = 0,idy:Int = 0) {
 
