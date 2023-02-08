@@ -377,6 +377,7 @@ class SkyCubeModel {
 	public function new(w:Int,h:Int,d:Int) {
 		
 		var canvas = js.Browser.document.createCanvasElement();
+		canvas.style.display="none";
 		canvas.width = 2048;
 		canvas.height = 2048;
 		js.Browser.document.body.appendChild(canvas);
@@ -409,6 +410,7 @@ class SkyCubeModel {
 								var imgDatafront = ctx.getImageData(0,0,2048,2048);
 								ctx.drawImage(back,0,0);
 								var imgDataback = ctx.getImageData(0,0,2048,2048);
+								ctx.clearRect(0,0,2048,2048);
 		
 		// Define vertex structure
 		var structure = new VertexStructure();
