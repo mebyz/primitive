@@ -1,5 +1,8 @@
 package primitive;
 
+import kha.graphics5_.BlendingOperation;
+import kha.graphics5_.BlendingFactor;
+import kha.graphics5_.CullMode;
 import haxe.Timer;
 import kha.graphics4.IndexBuffer;
 import kha.graphics4.VertexBuffer;
@@ -46,6 +49,13 @@ class PlaneModel {
 	public function drawPlane(frame:Framebuffer, mvp:FastMatrix4) {	
 		if (mvp != null) {		
 			var g = frame.g4;
+			pipeline.blendSource = SourceAlpha;
+			pipeline.blendDestination = DestinationAlpha;
+			pipeline.blendOperation = BlendingOperation.Subtract;
+			/*pipeline.alphaBlendOperation = Max;
+			pipeline.alphaBlendSource = BlendOne;
+			pipeline.alphaBlendDestination = InverseSourceAlpha;
+			pipeline.cullMode = None;*/
 			g.setPipeline(pipeline);
 			g.setVertexBuffer(vtb);
 			g.setIndexBuffer(idb);
