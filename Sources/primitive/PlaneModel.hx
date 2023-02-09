@@ -51,7 +51,7 @@ class PlaneModel {
 			var g = frame.g4;
 			pipeline.blendSource = SourceAlpha;
 			pipeline.blendDestination = DestinationAlpha;
-			pipeline.blendOperation = BlendingOperation.Subtract;
+			pipeline.blendOperation = BlendingOperation.Add;
 			/*pipeline.alphaBlendOperation = Max;
 			pipeline.alphaBlendSource = BlendOne;
 			pipeline.alphaBlendDestination = InverseSourceAlpha;
