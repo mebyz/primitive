@@ -334,6 +334,7 @@ class SkyCubeModel {
 	static inline var UNPACK_COLORSPACE_CONVERSION_WEBGL : Int = 37443;
 	static inline var BROWSER_DEFAULT_WEBGL : Int = 37444;
 
+	static inline var C_SIZE = 2048;
 	// Array of colors for each cube vertex
 	static var colors:Array<Float> = [
 	    0.583,  0.771,  0.014,
@@ -378,8 +379,8 @@ class SkyCubeModel {
 		
 		var canvas = js.Browser.document.createCanvasElement();
 		canvas.style.display="none";
-		canvas.width = 2048;
-		canvas.height = 2048;
+		canvas.width = C_SIZE;
+		canvas.height = C_SIZE;
 		js.Browser.document.body.appendChild(canvas);
 
 		
@@ -399,18 +400,18 @@ class SkyCubeModel {
 						front.onload = function() {
 							back.onload = function() {  
 								ctx.drawImage(top,0,0);
-								var imgDatatop = ctx.getImageData(0,0,2048,2048);
+								var imgDatatop = ctx.getImageData(0,0,C_SIZE,C_SIZE);
 								ctx.drawImage(bottom,0,0);
-								var imgDatabottom = ctx.getImageData(0,0,2048,2048);
+								var imgDatabottom = ctx.getImageData(0,0,C_SIZE,C_SIZE);
 								ctx.drawImage(left,0,0);
-								var imgDataleft = ctx.getImageData(0,0,2048,2048);
+								var imgDataleft = ctx.getImageData(0,0,C_SIZE,C_SIZE);
 								ctx.drawImage(right,0,0);
-								var imgDataright = ctx.getImageData(0,0,2048,2048);
+								var imgDataright = ctx.getImageData(0,0,C_SIZE,C_SIZE);
 								ctx.drawImage(front,0,0);
-								var imgDatafront = ctx.getImageData(0,0,2048,2048);
+								var imgDatafront = ctx.getImageData(0,0,C_SIZE,C_SIZE);
 								ctx.drawImage(back,0,0);
-								var imgDataback = ctx.getImageData(0,0,2048,2048);
-								ctx.clearRect(0,0,2048,2048);
+								var imgDataback = ctx.getImageData(0,0,C_SIZE,C_SIZE);
+								ctx.clearRect(0,0,C_SIZE,C_SIZE);
 		
 		// Define vertex structure
 		var structure = new VertexStructure();
@@ -452,7 +453,7 @@ class SkyCubeModel {
 		   
 			SystemImpl.gl.bindTexture(TEXTURE_CUBE_MAP, texture);
 
-	//		SystemImpl.gl.texImage2D(target, level, internalFormat, 2048,2048,0,format, type, faceDatas[i].data);
+	//		SystemImpl.gl.texImage2D(target, level, internalFormat, C_SIZE,C_SIZE,0,format, type, faceDatas[i].data);
 	SystemImpl.gl.texImage2D(target, level, internalFormat,format, type, faceDatas[i]);
 			/*
 			SystemImpl.gl.texParameteri(TEXTURE_CUBE_MAP, TEXTURE_MAG_FILTER, NEAREST);
