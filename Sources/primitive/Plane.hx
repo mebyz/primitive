@@ -18,14 +18,22 @@ class Plane extends Shape {
 		uvsBuffer = new Array();
 		for (j in 0...segmentsY) {
 			for (i in 0...segmentsX) {
-				vertices.push(i * stepX - w / 2+idx*w);
-
-				if (heightData == null) 
-					vertices.push(-350.0);
-				else 
-					vertices.push((heightData[j * segmentsX + i]+50) / 1 );
 				
-				vertices.push(j * stepY - h / 2+idy*h);
+				var xx = i*stepX - (heightData == null ? w / 2 : 0) + idx*w;
+
+				var yy = 0;
+				if (heightData != null) 
+					yy = heightData[j * Std.int(segmentsX) + i];
+				//else 
+				//	trace('no heights');
+				
+				var zz= j*stepY - (heightData == null ? h / 2 : 0) +idy*h;
+				//if (xx<10 && zz < 10){
+					
+				//trace(" x:"+xx+" y:"+yy+" z:"+zz);}
+				vertices.push(xx);
+				vertices.push(yy);
+				vertices.push(zz);
 			
 				uvsBuffer.push((i)/100);
 				uvsBuffer.push((j)/100);
