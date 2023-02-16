@@ -596,33 +596,20 @@ bottom.src = "bottom.jpg";
 top.src = "top.jpg";
 }
 
-	public function render(frames:Array<Framebuffer>, mvp: FastMatrix4) {
-		var frame = frames[0];
-		// A graphics object which lets us perform 3D operations
+	public function render(frame:Framebuffer, mvp: FastMatrix4) {
+		
 		var g = frame.g4;
 			if (g!=null && vertexBuffer != null) {
 				
-		// Begin rendering
-        g.begin();
+			g.begin();
 
-        // Clear screen
-		//g.clear(Color.fromFloats(0.0, 0.0, 0.3), 1.0);
+			g.setVertexBuffer(vertexBuffer);
+			g.setIndexBuffer(indexBuffer);
+			g.setPipeline(pipeline);
+			g.setMatrix(mvpID, mvp);
+			g.drawIndexedVertices();
 
-		// Bind data we want to draw
-		g.setVertexBuffer(vertexBuffer);
-		g.setIndexBuffer(indexBuffer);
-
-		// Bind state we want to draw with
-		g.setPipeline(pipeline);
-
-		// Set our transformation to the currently bound shader, in the "MVP" uniform
-		g.setMatrix(mvpID, mvp);
-
-		// Draw!
-		g.drawIndexedVertices();
-
-		// End rendering
-		g.end();
-	}
+			g.end();
+		}
     }
 }
