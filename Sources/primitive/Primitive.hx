@@ -18,7 +18,7 @@ class Primitive {
 		    	for (i in 0...params.w){
 			    	heights = heights.concat(params.heights[i]);
 		    	}
-		    	s = new Plane(params.w,params.h,params.x,params.y,1,1,heights,params.idx,params.idy);
+		    	s = new Plane(params.w,params.h,params.x,params.y,1,1,heights,params.idx,params.idy,100);
 		    }
 		    case 'cube': {
 		    	s = new Cube(params.x,params.y,params.z);

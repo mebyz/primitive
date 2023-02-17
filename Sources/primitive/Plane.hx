@@ -7,10 +7,18 @@ import kha.graphics4.VertexStructure;
 
 class Plane extends Shape {
 
+	public var uvsDivisor:Float = 1.0;
+
+	public function setUvsDivisor(divisor:Float) {
+		uvsDivisor = divisor;
+	}
+
 	public function new(w:Float, h:Float, segmentsX:Int = 2, segmentsY:Int = 2, uvsX:Int = 1, uvsY:Int = 1,
-						heightData:Array<Int> = null,idx:Int = 0,idy:Int = 0) {
+						heightData:Array<Int> = null,idx:Int = 0,idy:Int = 0, div:Float = 1.0) {
 
 		super();
+
+		setUvsDivisor(div);
 
 		var vertices = new Array<Float>();
 		var stepX = w / (segmentsX - 1);
@@ -24,19 +32,15 @@ class Plane extends Shape {
 				var yy = 0;
 				if (heightData != null) 
 					yy = heightData[j * Std.int(segmentsX) + i];
-				//else 
-				//	trace('no heights');
 				
 				var zz= j*stepY - (heightData == null ? h / 2 : 0) +idy*h;
-				//if (xx<10 && zz < 10){
-					
-				//trace(" x:"+xx+" y:"+yy+" z:"+zz);}
+				
 				vertices.push(xx);
 				vertices.push(yy);
 				vertices.push(zz);
 			
-				uvsBuffer.push((i)/100);
-				uvsBuffer.push((j)/100);
+				uvsBuffer.push(i/uvsDivisor);
+				uvsBuffer.push(j/uvsDivisor);
 
 			}
 		}
@@ -88,9 +92,7 @@ class Plane extends Shape {
 		);
 		
 		var vbData = vertexBuffer.lock();
-//		for (i in 0...vbData.length) {
-//			vbData.set(i, vertices[i]);
-//		}
+
 		var structureLength=5;
 		for (i in 0...Std.int(vbData.length / structureLength)) {
 		  vbData.set(i * structureLength, vertices[i * 3]);
