@@ -20,6 +20,7 @@ import kha.graphics4.CompareMode;
 import kha.Shaders;
 import kha.Assets;
 import kha.graphics4.TextureUnit;
+import primitive.GL;
 
 class PlaneModel {
 
@@ -85,6 +86,15 @@ class PlaneModel {
 			var texture = pipeline.getTextureUnit("s_normals");
 			var image = Assets.images.waternormals;
 			g.setTexture(texture, image);
+
+			// gl.NEAREST is also allowed, instead of gl.LINEAR, as neither mipmap.
+			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.LINEAR);
+			// Prevents s-coordinate wrapping (repeating).
+			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
+			// Prevents t-coordinate wrapping (repeating).
+			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.CLAMP_TO_EDGE);
+
+
 			g.setMatrix(mvpID, mvp);
 			g.drawIndexedVertices();
 			g.setFloat(timeLocation, Timer.stamp());
