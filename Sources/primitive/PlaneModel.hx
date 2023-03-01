@@ -1,5 +1,7 @@
 package primitive;
 
+import kha.math.FastVector3;
+import kha.math.Vector3;
 import js.lib.Int16Array;
 import kha.graphics4.DepthStencilFormat;
 import kha.SystemImpl;
@@ -29,6 +31,7 @@ class PlaneModel {
 	public var idb:IndexBuffer;
 	public var pipeline:PipelineState;
 	public var mvpID:ConstantLocation;
+	public var camPosID:ConstantLocation;
 	public var shader : Dynamic;
 	public var timeLocation:ConstantLocation;
 
@@ -55,6 +58,7 @@ class PlaneModel {
 
 		mvpID = pipeline.getConstantLocation("MVP");
 		timeLocation = pipeline.getConstantLocation("time");
+		camPosID = pipeline.getConstantLocation("camPos");
 	}
 
 	public function createWebGLImagefromWebglTExture(texture: Texture) : WebGLImage {
@@ -64,7 +68,7 @@ class PlaneModel {
 		return image;
 	}
 
-	public function drawPlane(frame:Framebuffer, mvp:FastMatrix4, renderTexture: Texture) {	
+	public function drawPlane(frame:Framebuffer, mvp:FastMatrix4, renderTexture: Texture, camPos:FastVector3) {	
 		if (mvp != null) {		
 			var g = frame.g4;
 			pipeline.blendSource = SourceAlpha;
@@ -96,6 +100,8 @@ class PlaneModel {
 
 
 			g.setMatrix(mvpID, mvp);
+
+			g.setVector3(camPosID, camPos);
 			g.drawIndexedVertices();
 			g.setFloat(timeLocation, Timer.stamp());
 		}
