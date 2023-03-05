@@ -71,9 +71,9 @@ class PlaneModel {
 	public function drawPlane(frame:Framebuffer, mvp:FastMatrix4, renderTexture: Texture, camPos:FastVector3) {	
 		if (mvp != null) {		
 			var g = frame.g4;
-			pipeline.blendSource = SourceAlpha;
-			pipeline.blendDestination = DestinationAlpha;
-			pipeline.blendOperation = BlendingOperation.Add;
+			//pipeline.blendSource = SourceAlpha;
+			//pipeline.blendDestination = DestinationAlpha;
+			//pipeline.blendOperation = BlendingOperation.Add;
 			g.setPipeline(pipeline);
 			g.setVertexBuffer(vtb);
 			g.setIndexBuffer(idb);
