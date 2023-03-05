@@ -93,12 +93,9 @@ class PlaneModel {
 
 			// gl.NEAREST is also allowed, instead of gl.LINEAR, as neither mipmap.
 			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.LINEAR);
-			// Prevents s-coordinate wrapping (repeating).
-			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);
-			// Prevents t-coordinate wrapping (repeating).
-			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.CLAMP_TO_EDGE);
-
-
+			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.REPEAT);
+			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.REPEAT);
+		
 			g.setMatrix(mvpID, mvp);
 
 			g.setVector3(camPosID, camPos);
