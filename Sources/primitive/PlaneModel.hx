@@ -83,16 +83,20 @@ class PlaneModel {
 			var unit = pipeline.getTextureUnit("render_texture");
 			g.setTextureWebGLImage(unit, createWebGLImagefromWebglTExture(renderTexture));
 
+			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.REPEAT);
+			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.REPEAT);
+		
 			var texture = pipeline.getTextureUnit("s_texture");
 			var image = Assets.images.water;
 			g.setTexture(texture, image);
 			
+			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.REPEAT);
+			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.REPEAT);
+		
 			var texture = pipeline.getTextureUnit("s_normals");
 			var image = Assets.images.waternormals;
 			g.setTexture(texture, image);
 
-			// gl.NEAREST is also allowed, instead of gl.LINEAR, as neither mipmap.
-			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.LINEAR);
 			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.REPEAT);
 			SystemImpl.gl.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.REPEAT);
 		
